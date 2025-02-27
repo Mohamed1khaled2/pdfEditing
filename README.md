@@ -25,11 +25,11 @@ To install and run this project, follow these steps:
     ```sh
     git clone https://github.com/Mohamed1khaled2/pdfEditing.git
     ```
-2. Navigate to the project directory:
+3. Navigate to the project directory:
     ```sh
     cd pdfEditing
     ```
-3. Install the required dependencies:
+4. Install the required dependencies:
     ```sh
     pip install -r requirements.txt
     ```
@@ -38,6 +38,7 @@ To install and run this project, follow these steps:
 To use the functionalities provided by this project, you can run the following commands:
 
 ### Reverse PDF 🔄
+- `hint 💡`: You can add a lot of file not only one.
 ```sh
 python project.py --option rev --files path/to/your/file.pdf
 ```
@@ -48,6 +49,7 @@ python project.py --option split --files path/to/your/file.pdf --from_ num1 --to
 ```
 
 ### Merge PDF ➕
+- `hint 💡`: You can add a lot of file not only one.
 ```sh
 python project.py --option marge --files path/to/your/file1.pdf path/to/your/file2.pdf
 ```
