@@ -38,7 +38,7 @@ To install and run this project, follow these steps:
 To use the functionalities provided by this project, you can run the following commands:
 
 ### Reverse PDF 🔄
-- `hint 💡`: You can add alot of file not only one.
+- `hint 💡`: You can add a lot of file not only one.
 ```sh
 python project.py --option rev --files path/to/your/file.pdf
 ```
@@ -49,7 +49,7 @@ python project.py --option split --files path/to/your/file.pdf --from_ num1 --to
 ```
 
 ### Merge PDF ➕
-- `hint 💡`: You can add alot of file not only one.
+- `hint 💡`: You can add a lot of file not only one.
 ```sh
 python project.py --option marge --files path/to/your/file1.pdf path/to/your/file2.pdf
 ```
