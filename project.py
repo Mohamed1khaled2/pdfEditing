@@ -3,6 +3,10 @@ import argparse
 import sys
 import os
 
+
+# TODO : The user can passing foler path to the profram and we get the files pdf in this folder and do the operation on it
+
+
 def check_pdf_exstention(name_files: list[str])-> bool:
     """
     Check if the provided files have a PDF extension and is exists.
