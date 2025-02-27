@@ -2,10 +2,8 @@ from pypdf import PdfWriter, PdfReader
 import argparse
 import sys
 import os
-import mimetypes
 
-
-def check_pdf(name_files: list[str])-> bool:
+def check_pdf_exstention(name_files: list[str])-> bool:
     """
     Check if the provided files have a PDF extension and is exists.
 
@@ -13,14 +11,10 @@ def check_pdf(name_files: list[str])-> bool:
     :return: True if all files have a PDF extension, raises ValueError otherwise.
     """
 
-    files_current_dir = os.listdir(os.getcwd())
 
     for file in name_files:
         if not file.split(".")[1] in ["pdf", "PDF"]:
             raise ValueError("Erorr: mime_type wrong")
-        if not file in files_current_dir:
-            raise FileNotFoundError("Erorr: files is not exists g")
-            
     return True
 
 
@@ -32,7 +26,7 @@ def pdf_reverse(original_files: list[str]):
     :param reverse_names: List of new PDF file names.
     """
 
-    check_pdf(original_files)
+    check_pdf_exstention(original_files)
 
     reverse_names = [f"reverse-{file}" for file in original_files]
 
@@ -88,25 +82,41 @@ def pdf_split(original_file: str, from_: int, to: int):
     :param to: The ending page number (1-based index).
     """
 
-    check_pdf([original_file])
+    # Check PDF Extension
+    check_pdf_exstention([original_file])
 
-    if from_ >= to:
+    # Validate Page Range
+    if from_ > to:
         raise ValueError("'from_' must be less than 'to'")
 
+    # Read PDF File
     try:
         reader = PdfReader(original_file)
     except FileNotFoundError:
         sys.exit(f"Not found the file {original_file}")
 
+    # Initialize PDF Writer
     writer = PdfWriter()
 
+    # Add Pages to Writer
     for i in range(from_ - 1, to):
-        writer.add_page(reader.pages[i])
-
-    # Define the output directory and file path
+        try:
+            writer.add_page(reader.pages[i])
+        except IndexError:
+            sys.exit(f"Your pdf pages mixmum equal {len(reader.pages)}")
+    
+    # Check Page Count
+    if len(reader.pages) == len(writer.pages):
+        sys.exit("This equal")    
+    
+    # Define Output Directory
     output_dir = "output/split"
     file_output = os.path.join(output_dir, f"split-{from_}-{to}.pdf")
+    
+    # Create Output Directory
     os.makedirs(output_dir, exist_ok=True)
+    
+    # Write Split PDF
     with open(file_output, "wb") as new_file:
         writer.write(new_file)
 
@@ -121,20 +131,23 @@ def pdf_marge(pdfs: list[str]):
     :return: PdfWriter object containing the merged PDF.
     """
 
-    check_pdf(pdfs)
+    check_pdf_exstention(pdfs)
     
-    if len(pdfs) < 2 :
-        raise Exception("less than two file")
-    
+    if len(pdfs) < 2:
+        raise ValueError("less than two file")
 
     # Create a PdfWriter object to write the merged PDF
     marger = PdfWriter()
 
     # Iterate over the list of PDF files
     for pdf in pdfs:
-        # Append each PDF file to the PdfWriter object
-        marger.append(open(pdf, "rb"))
-
+        # check if the file exists
+        try:
+            # Append each PDF file to the PdfWriter object
+            marger.append(open(pdf, "rb"))
+        except FileNotFoundError:
+            sys.exit(f"This is File Not found {pdf}")
+    
     # Define the output directory and file path
     output_dir = "output/marge"
     file_output = os.path.join(output_dir, f"output.pdf")
