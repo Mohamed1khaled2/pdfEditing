@@ -4,10 +4,10 @@ import sys
 import os
 
 
-# TODO : The user can passing foler path to the profram and we get the files pdf in this folder and do the operation on it
+# TODO : The user can passing folder path to the program and we get the files pdf in this folder and do the operation on it
 
 
-def check_pdf_exstention(name_files: list[str])-> bool:
+def check_pdf_extension(name_files: list[str])-> bool:
     """
     Check if the provided files have a PDF extension and is exists.
 
@@ -18,7 +18,7 @@ def check_pdf_exstention(name_files: list[str])-> bool:
 
     for file in name_files:
         if not file.split(".")[1] in ["pdf", "PDF"]:
-            raise ValueError("Erorr: mime_type wrong")
+            raise ValueError("Error: mime_type wrong")
     return True
 
 
@@ -30,7 +30,7 @@ def pdf_reverse(original_files: list[str]):
     :param reverse_names: List of new PDF file names.
     """
 
-    check_pdf_exstention(original_files)
+    check_pdf_extension(original_files)
 
     reverse_names = [f"reverse-{file}" for file in original_files]
 
@@ -87,7 +87,7 @@ def pdf_split(original_file: str, from_: int, to: int):
     """
 
     # Check PDF Extension
-    check_pdf_exstention([original_file])
+    check_pdf_extension([original_file])
 
     # Validate Page Range
     if from_ > to:
@@ -107,7 +107,7 @@ def pdf_split(original_file: str, from_: int, to: int):
         try:
             writer.add_page(reader.pages[i])
         except IndexError:
-            sys.exit(f"Your pdf pages mixmum equal {len(reader.pages)}")
+            sys.exit(f"Your pdf pages maximum equal {len(reader.pages)}")
     
     # Check Page Count
     if len(reader.pages) == len(writer.pages):
@@ -135,20 +135,20 @@ def pdf_marge(pdfs: list[str]):
     :return: PdfWriter object containing the merged PDF.
     """
 
-    check_pdf_exstention(pdfs)
+    check_pdf_extension(pdfs)
     
     if len(pdfs) < 2:
         raise ValueError("less than two file")
 
     # Create a PdfWriter object to write the merged PDF
-    marger = PdfWriter()
+    merger = PdfWriter()
 
     # Iterate over the list of PDF files
     for pdf in pdfs:
         # check if the file exists
         try:
             # Append each PDF file to the PdfWriter object
-            marger.append(open(pdf, "rb"))
+            merger.append(open(pdf, "rb"))
         except FileNotFoundError:
             sys.exit(f"This is File Not found {pdf}")
     
@@ -159,14 +159,14 @@ def pdf_marge(pdfs: list[str]):
 
     # Write the merged PDF to the output file
     with open(file_output, "wb") as new_file:
-        marger.write(new_file)
+        merger.write(new_file)
         new_file.close()
 
     # Close the PdfWriter and output file
-    marger.close()
+    merger.close()
 
     # Return the PdfWriter object containing the merged PDF
-    return marger
+    return merger
 
 
 def main():

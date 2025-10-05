@@ -1,6 +1,6 @@
 import pytest
 from pypdf import PdfReader, PdfWriter
-from project import pdf_reverse, pdf_split, check_pdf_exstention, pdf_marge
+from project import pdf_reverse, pdf_split, check_pdf_extension, pdf_marge
 import os
 
 
@@ -99,14 +99,14 @@ def test_pdf_split(create_sample_pdfs):
         pdf_split("test.pkk", from_=9, to=5)
 
 
-def test_check_pdf_exstention(create_sample_pdfs):
+def test_check_pdf_extension(create_sample_pdfs):
     """
-    Test the check_pdf_exstention function to ensure it correctly identifies PDF files.
+    Test the check_pdf_extension function to ensure it correctly identifies PDF files.
     """
     with pytest.raises(ValueError):
-        check_pdf_exstention(["file.txt"])
+        check_pdf_extension(["file.txt"])
     with pytest.raises(ValueError):
-        check_pdf_exstention(["file.txt", "file.pdf"])
+        check_pdf_extension(["file.txt", "file.pdf"])
 
 
 def test_pdf_marge(create_sample_pdfs):
