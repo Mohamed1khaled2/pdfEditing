@@ -1,6 +1,6 @@
 import pytest
 from pypdf import PdfReader, PdfWriter
-from project import pdf_reverse, pdf_split, check_pdf_extension, pdf_marge
+from pdf_edit import PDFEdit
 import os
 
 
@@ -53,7 +53,7 @@ def test_pdf_reverse(create_sample_pdfs):
     reader = PdfReader(name_file)
 
     # Reverse the pages of the sample PDF
-    pdf_reverse([name_file])
+    PDFEdit().pdf_reverse([name_file])
 
     # Read the reversed PDF
     reversed_reader = PdfReader(f"output/reverse/reverse-{name_file}")
@@ -70,7 +70,7 @@ def test_pdf_reverse(create_sample_pdfs):
 
     # Test with an invalid file
     with pytest.raises(SystemExit):
-        pdf_reverse(["test.pdf"])
+        PDFEdit().pdf_reverse(["test.pdf"])
 
          
 
@@ -82,7 +82,7 @@ def test_pdf_split(create_sample_pdfs):
     name_file = "sample1.pdf"
 
     # Split the sample PDF
-    splited_pdf = pdf_split(name_file, from_=1, to=5)
+    splited_pdf = PDFEdit().pdf_split(name_file, from_=1, to=5)
 
     # Read the second sample PDF
     PdfReader("sample2.pdf")
@@ -92,11 +92,11 @@ def test_pdf_split(create_sample_pdfs):
 
     # Test with an invalid range (from_ > to)
     with pytest.raises(ValueError):
-        pdf_split(name_file, from_=9, to=5)
+        PDFEdit().pdf_split(name_file, from_=9, to=5)
 
     # Test with an invalid file
     with pytest.raises(ValueError):
-        pdf_split("test.pkk", from_=9, to=5)
+       PDFEdit().pdf_split("test.pkk", from_=9, to=5)
 
 
 def test_check_pdf_extension(create_sample_pdfs):
@@ -104,9 +104,9 @@ def test_check_pdf_extension(create_sample_pdfs):
     Test the check_pdf_extension function to ensure it correctly identifies PDF files.
     """
     with pytest.raises(ValueError):
-        check_pdf_extension(["file.txt"])
+        PDFEdit().check_pdf_extension(["file.txt"])
     with pytest.raises(ValueError):
-        check_pdf_extension(["file.txt", "file.pdf"])
+        PDFEdit().check_pdf_extension(["file.txt", "file.pdf"])
 
 
 def test_pdf_marge(create_sample_pdfs):
@@ -114,17 +114,17 @@ def test_pdf_marge(create_sample_pdfs):
     Test the pdf_marge function to ensure it correctly merges multiple PDF files into one.
     """
     # Merge the two sample PDFs
-    merged_pdf = pdf_marge(["sample1.pdf", "sample2.pdf"])
+    merged_pdf = PDFEdit().pdf_marge(["sample1.pdf", "sample2.pdf"])
 
     # Check that the number of pages in the merged PDF matches the expected number of pages
     assert merged_pdf.get_num_pages() == 20
 
     # Test with an invalid file
     with pytest.raises(ValueError):
-        merged_pdf = pdf_marge(["sample1.pf", "sample2.pdf"])
+        merged_pdf = PDFEdit().pdf_marge(["sample1.pf", "sample2.pdf"])
         
     with pytest.raises(Exception):
-        merged_pdf = pdf_marge(["sample1.pf"])
+        merged_pdf = PDFEdit().pdf_marge(["sample1.pf"])
 
 
 if __name__ == "__main__":
