@@ -1,14 +1,3 @@
-
-pdfEditing/
-├── project.py            # Main functionality
-├── test_project.py       # Unit tests
-├── README.md             # Documentation
-├── requirements.txt      # Dependencies
-└── output/
-    ├── reverse/
-    ├── split/
-    └── marge/
-
 # PDF Editing Tools – CS50P Final Project
 
 ## Video Demo
