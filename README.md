@@ -2,7 +2,7 @@
 
 ## Video Demo
 
-👉 [Watch the demo video](https://your-video-link.com)  
+👉 [Watch the demo video](https://youtu.be/I7-o5Cb2-xk)  
 *(Replace with your actual YouTube or upload link)*
 
 ---

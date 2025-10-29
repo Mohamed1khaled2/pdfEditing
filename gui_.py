@@ -159,7 +159,7 @@ class ToplevelWindow(ctk.CTkToplevel):
                     int(self.split_window.from_to["to"]),
                 )
                 pdf_split = self.pdf_edit.pdf_split(
-                    [path for path in self.path_files], from_=from_to[0], to=[1]
+                    [path for path in self.path_files], from_=from_to[0], to=from_to[1]
                 )
 
                 if isinstance(pdf_split, tuple):
